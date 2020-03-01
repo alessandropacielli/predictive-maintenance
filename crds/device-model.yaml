@@ -1,0 +1,163 @@
+apiVersion: devices.kubeedge.io/v1alpha1
+kind: DeviceModel
+metadata:
+  name: turbofan-model
+  namespace: default
+spec:
+  properties:
+    - description: id
+      name: id
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0"
+    - description: cycle
+      name: cycle
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: setting1
+      name: setting1
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: setting2
+      name: setting2
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: setting3
+      name: setting3
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s1
+      name: s1
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s2
+      name: s2
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s3
+      name: s3
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s4
+      name: s4
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s5
+      name: s5
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s6
+      name: s6
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s7
+      name: s7
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s8
+      name: s8
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s9
+      name: s9
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s10
+      name: s10
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s11
+      name: s11
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s12
+      name: s12
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s13
+      name: s13
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s14
+      name: s14
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s15
+      name: s15
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s16
+      name: s16
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s17
+      name: s17
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s18
+      name: s18
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s19
+      name: s19
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s20
+      name: s20
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
+    - description: s21
+      name: s21
+      type:
+        string:
+          accessMode: ReadWrite
+          defaultValue: "0.0"
