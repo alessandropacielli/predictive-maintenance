@@ -21,11 +21,6 @@ status:
         metadata:
           type: string
         value: ""
-      propertyName: id
-    - desired:
-        metadata:
-          type: string
-        value: ""
       propertyName: cycle
     - desired:
         metadata:
