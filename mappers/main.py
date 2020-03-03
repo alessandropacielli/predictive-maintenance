@@ -9,7 +9,7 @@ import time
 host = '192.168.1.138'
 port = 1883
 topic = '$hw/events/device/turbofan/twin/update'
-path = os.path.join(os.path.dirname(__file__), '../datasets/PM_test_49.txt')
+path = os.path.join(os.path.dirname(__file__), 'datasets/PM_test_49.txt')
 sensor_cols = ['s' + str(i) for i in range(1,22)]
 sequence_cols = ['cycle', 'setting1', 'setting2', 'setting3']
 sleep_time = 2
