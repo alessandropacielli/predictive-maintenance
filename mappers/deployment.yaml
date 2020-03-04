@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbofan-mapper-303
+  labels:
+    app: turbofan-mapper-303
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turbofan-mapper-303
+  template:
+    metadata:
+      labels:
+        app: turbofan-mapper-303
+    spec:
+      containers:
+        - name: turbofan-mapper-303
+          image: 192.168.2.1:5000/turbofan-mapper
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - edge3
