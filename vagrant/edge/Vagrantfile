@@ -1,0 +1,9 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.hostname = "edge3"
+  config.vm.network "public_network", ip: "192.168.1.138"
+  config.vm.network "private_network", ip: "192.168.2.3"
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+  end
+end
