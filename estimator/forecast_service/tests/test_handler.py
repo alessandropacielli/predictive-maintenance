@@ -12,7 +12,7 @@ class HandlerTest(unittest.TestCase):
     self.attributes = 25
     self.input_shape = (1, self.seq_len, self.attributes)
 
-  def test_handler_call(self):
+  def test_handler_calls(self):
     estimator = Mock()
     db = Mock()
     event_sink = Mock()
