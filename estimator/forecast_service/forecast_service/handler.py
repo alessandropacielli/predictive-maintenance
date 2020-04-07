@@ -1,8 +1,11 @@
 import numpy as np
 
 class Handler():
-
+  """
+  The Handler class provides a function for handling forecast requests, producing a RUL forecast on the appropriate topic 
+  """
   def __init__(self, estimator, db, event_sink):
+    super().__init__()
     self.estimator = estimator
     self.db = db
     self.event_sink = event_sink
