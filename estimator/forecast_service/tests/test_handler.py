@@ -11,6 +11,7 @@ class HandlerTest(unittest.TestCase):
     self.seq_len = 50
     self.attributes = 25
     self.input_shape = (1, self.seq_len, self.attributes)
+    self.test_device = "test"
 
   def test_handler_calls(self):
     estimator = Mock()
@@ -29,7 +30,7 @@ class HandlerTest(unittest.TestCase):
 
     # Initialize and run component under test
     handler = Handler(estimator, db, event_sink)
-    handler.handle()    
+    handler.handle(self.test_device)    
 
     # Assert
     # The handlert should:
@@ -38,7 +39,7 @@ class HandlerTest(unittest.TestCase):
     # 3 - Call the predict method of the estimator to obtain a prediction
     # 4 - publish the result back to a topic
     estimator.get_sequence_length.assert_called_once()
-    db.get_last.assert_called_with(self.seq_len)
+    db.get_last.assert_called_with(self.seq_len, self.test_device)
     np.testing.assert_array_equal(np.reshape(db_data, (1, self.seq_len, self.attributes)), estimator.predict.call_args[0][0])
     event_sink.publish.assert_called_with(prediction)
 

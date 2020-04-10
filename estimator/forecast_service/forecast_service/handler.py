@@ -10,8 +10,8 @@ class Handler():
     self.db = db
     self.event_sink = event_sink
   
-  def handle(self):
+  def handle(self, device):
     seq_len = self.estimator.get_sequence_length()
-    last_measurements = self.db.get_last(seq_len)
+    last_measurements = self.db.get_last(seq_len, device)
     prediction = self.estimator.predict(np.reshape(last_measurements, (1, seq_len, last_measurements.shape[1])))
     self.event_sink.publish(prediction)
