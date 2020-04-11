@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  # Define a Telegraf service
+  telegraf:
+    image: 'telegraf'
+    volumes:
+      - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    links:
+      - influxdb
+    ports:
+      - "8092:8092/udp"
+      - "8094:8094"
+      - "8125:8125/udp"
+    depends_on:
+      - influxdb
+      - kafka
+    restart: unless-stopped
+  # Define an InfluxDB service
+  influxdb:
+    image: 'influxdb'
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+  zookeeper:
+    image: 'bitnami/zookeeper:3'
+    ports:
+      - '2181:2181'
+    volumes:
+      - 'zookeeper_data:/bitnami'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: 'bitnami/kafka:2'
+    ports:
+      - '9092:9092'
+    volumes:
+      - 'kafka_data:/bitnami'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
