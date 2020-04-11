@@ -4,4 +4,5 @@
 __pycache__
 *.log
 .ipynb_checkpoints
+*.egg-info
 test-environment/data/
