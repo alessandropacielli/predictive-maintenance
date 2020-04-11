@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
   # Define a Telegraf service
   telegraf:
-    image: 'telegraf'
+    image: "telegraf"
     volumes:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     links:
@@ -14,36 +14,30 @@ services:
       - "8125:8125/udp"
     depends_on:
       - influxdb
-      - kafka
     restart: unless-stopped
   # Define an InfluxDB service
   influxdb:
-    image: 'influxdb'
+    image: "influxdb"
     volumes:
       - ./data/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
   zookeeper:
-    image: 'bitnami/zookeeper:3'
+    image: wurstmeister/zookeeper
     ports:
-      - '2181:2181'
-    volumes:
-      - 'zookeeper_data:/bitnami'
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
+      - "2181:2181"
+    hostname: zookeeper
   kafka:
-    image: 'bitnami/kafka:2'
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
     ports:
-      - '9092:9092'
-    volumes:
-      - 'kafka_data:/bitnami'
+      - "9092:9092"
+    hostname: kafka
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      - zookeeper
-volumes:
-  zookeeper_data:
-    driver: local
-  kafka_data:
-    driver: local
+      - "zookeeper"
