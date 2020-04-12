@@ -7,6 +7,10 @@ from forecast_service.handler import Handler
 
 class HandlerTest(unittest.TestCase):
 
+  """
+  This is an integration test for the business logic of the prediction service
+  """
+
   def setUp(self):
     self.seq_len = 50
     self.attributes = 25
@@ -32,7 +36,7 @@ class HandlerTest(unittest.TestCase):
     handler = Handler(estimator, db, event_sink)
     handler.handle(self.test_device)    
 
-    # Assert
+    # Assertions
     # The handlert should:
     # 1 - Obtain the sequence lenght N required by the estimator
     # 2 - Obtain the last N data points from the database

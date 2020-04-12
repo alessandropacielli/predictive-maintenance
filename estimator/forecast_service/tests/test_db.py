@@ -2,7 +2,7 @@ from influxdb import InfluxDBClient
 from datetime import datetime, timedelta
 import unittest
 import pandas as pd
-from forecast_service.db import InfluxDBPersistence
+from forecast_service.db import InfluxDB
 import numpy as np
 import unittest
 import pytest
@@ -54,7 +54,7 @@ class TestInfluxDB(unittest.TestCase, TestDB):
 
     self.client.write_points(json_body, database='test')
 
-    self.db = InfluxDBPersistence('127.0.0.1', 8086, 'test')
+    self.db = InfluxDB('127.0.0.1', 8086, 'test')
   
   def tearDown(self):
     self.client.drop_database('test')

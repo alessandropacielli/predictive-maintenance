@@ -1,8 +1,15 @@
-from influxdb import DataFrameClient
+from abc import ABC, abstractmethod
 
-class InfluxDBPersistence():
+class DB(ABC):
+
+  @abstractmethod
+  def get_last(self, n, device):
+    pass
+
+class InfluxDB(DB):
 
   def __init__(self, host, port, database):
+    from influxdb import DataFrameClient
     super().__init__()
     self.client = DataFrameClient(host=host, port=port, database=database)
 
