@@ -41,3 +41,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - "zookeeper"
+  tensorflow:
+    image: tensorflow/serving
+    ports:
+      - "8501:8501"
+    hostname: tensorflow
+    volumes:
+      - ../estimator/training/models/turbofan:/models/turbofan
+    environment:
+      MODEL_NAME: turbofan
+
