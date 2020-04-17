@@ -1,12 +1,13 @@
-package com.alessandropacielli.turbofan.model;
+package com.alessandropacielli.turbofan.data.influxdb;
 
+import com.alessandropacielli.turbofan.models.TurbofanModel;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 
 import java.time.Instant;
 
 @Measurement(name = "normalized", database = "test")
-public class TurbofanModel {
+public class InfluxDBTurbofanModel implements TurbofanModel {
     private @Column(name = "time")
     Instant time;
     private @Column(name = "1")
@@ -62,37 +63,37 @@ public class TurbofanModel {
     private @Column(name = "device", tag = true)
     String device;
 
-    public TurbofanModel() {
+    public InfluxDBTurbofanModel() {
 
     }
 
-    public TurbofanModel(Instant time,
-                         Long cycle,
-                         Long setting1,
-                         Long setting2,
-                         Long setting3,
-                         Long s1,
-                         Long s2,
-                         Long s3,
-                         Long s4,
-                         Long s5,
-                         Long s6,
-                         Long s7,
-                         Long s8,
-                         Long s9,
-                         Long s10,
-                         Long s11,
-                         Long s12,
-                         Long s13,
-                         Long s14,
-                         Long s15,
-                         Long s16,
-                         Long s17,
-                         Long s18,
-                         Long s19,
-                         Long s20,
-                         Long s21,
-                         String device) {
+    public InfluxDBTurbofanModel(Instant time,
+                                 Long cycle,
+                                 Long setting1,
+                                 Long setting2,
+                                 Long setting3,
+                                 Long s1,
+                                 Long s2,
+                                 Long s3,
+                                 Long s4,
+                                 Long s5,
+                                 Long s6,
+                                 Long s7,
+                                 Long s8,
+                                 Long s9,
+                                 Long s10,
+                                 Long s11,
+                                 Long s12,
+                                 Long s13,
+                                 Long s14,
+                                 Long s15,
+                                 Long s16,
+                                 Long s17,
+                                 Long s18,
+                                 Long s19,
+                                 Long s20,
+                                 Long s21,
+                                 String device) {
         this();
         this.time = time;
         this.device = device;
@@ -123,6 +124,7 @@ public class TurbofanModel {
         this.s21 = s21;
     }
 
+    @Override
     public Instant getTime() {
         return time;
     }
@@ -131,6 +133,7 @@ public class TurbofanModel {
         this.time = time;
     }
 
+    @Override
     public Long getCycle() {
         return cycle;
     }
@@ -139,6 +142,7 @@ public class TurbofanModel {
         this.cycle = cycle;
     }
 
+    @Override
     public Long getSetting1() {
         return setting1;
     }
@@ -147,6 +151,7 @@ public class TurbofanModel {
         this.setting1 = setting1;
     }
 
+    @Override
     public Long getSetting2() {
         return setting2;
     }
@@ -155,6 +160,7 @@ public class TurbofanModel {
         this.setting2 = setting2;
     }
 
+    @Override
     public Long getSetting3() {
         return setting3;
     }
@@ -163,6 +169,7 @@ public class TurbofanModel {
         this.setting3 = setting3;
     }
 
+    @Override
     public Long getS1() {
         return s1;
     }
@@ -171,6 +178,7 @@ public class TurbofanModel {
         this.s1 = s1;
     }
 
+    @Override
     public Long getS2() {
         return s2;
     }
@@ -179,6 +187,7 @@ public class TurbofanModel {
         this.s2 = s2;
     }
 
+    @Override
     public Long getS3() {
         return s3;
     }
@@ -187,6 +196,7 @@ public class TurbofanModel {
         this.s3 = s3;
     }
 
+    @Override
     public Long getS4() {
         return s4;
     }
@@ -195,6 +205,7 @@ public class TurbofanModel {
         this.s4 = s4;
     }
 
+    @Override
     public Long getS5() {
         return s5;
     }
@@ -203,6 +214,7 @@ public class TurbofanModel {
         this.s5 = s5;
     }
 
+    @Override
     public Long getS6() {
         return s6;
     }
@@ -211,6 +223,7 @@ public class TurbofanModel {
         this.s6 = s6;
     }
 
+    @Override
     public Long getS7() {
         return s7;
     }
@@ -219,6 +232,7 @@ public class TurbofanModel {
         this.s7 = s7;
     }
 
+    @Override
     public Long getS8() {
         return s8;
     }
@@ -227,6 +241,7 @@ public class TurbofanModel {
         this.s8 = s8;
     }
 
+    @Override
     public Long getS9() {
         return s9;
     }
@@ -235,6 +250,7 @@ public class TurbofanModel {
         this.s9 = s9;
     }
 
+    @Override
     public Long getS10() {
         return s10;
     }
@@ -243,6 +259,7 @@ public class TurbofanModel {
         this.s10 = s10;
     }
 
+    @Override
     public Long getS11() {
         return s11;
     }
@@ -251,6 +268,7 @@ public class TurbofanModel {
         this.s11 = s11;
     }
 
+    @Override
     public Long getS12() {
         return s12;
     }
@@ -259,6 +277,7 @@ public class TurbofanModel {
         this.s12 = s12;
     }
 
+    @Override
     public Long getS13() {
         return s13;
     }
@@ -267,6 +286,7 @@ public class TurbofanModel {
         this.s13 = s13;
     }
 
+    @Override
     public Long getS14() {
         return s14;
     }
@@ -275,6 +295,7 @@ public class TurbofanModel {
         this.s14 = s14;
     }
 
+    @Override
     public Long getS15() {
         return s15;
     }
@@ -283,6 +304,7 @@ public class TurbofanModel {
         this.s15 = s15;
     }
 
+    @Override
     public Long getS16() {
         return s16;
     }
@@ -291,6 +313,7 @@ public class TurbofanModel {
         this.s16 = s16;
     }
 
+    @Override
     public Long getS17() {
         return s17;
     }
@@ -299,6 +322,7 @@ public class TurbofanModel {
         this.s17 = s17;
     }
 
+    @Override
     public Long getS18() {
         return s18;
     }
@@ -307,6 +331,7 @@ public class TurbofanModel {
         this.s18 = s18;
     }
 
+    @Override
     public Long getS19() {
         return s19;
     }
@@ -315,6 +340,7 @@ public class TurbofanModel {
         this.s19 = s19;
     }
 
+    @Override
     public Long getS20() {
         return s20;
     }
@@ -323,6 +349,7 @@ public class TurbofanModel {
         this.s20 = s20;
     }
 
+    @Override
     public Long getS21() {
         return s21;
     }
@@ -331,6 +358,7 @@ public class TurbofanModel {
         this.s21 = s21;
     }
 
+    @Override
     public String getDevice() {
         return device;
     }

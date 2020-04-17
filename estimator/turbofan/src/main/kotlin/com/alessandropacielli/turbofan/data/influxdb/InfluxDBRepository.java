@@ -16,6 +16,7 @@ public class InfluxDBRepository<Model> implements Repository<Model> {
     private String measurement;
 
     public InfluxDBRepository(String url, String user, String password, String database, String measurement, Class<Model> clazz) {
+        // TODO this should be a singleton
         this.client = InfluxDBFactory.connect(url, user, password);
         this.mapper = new InfluxDBMapper(client);
     }
