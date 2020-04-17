@@ -6,5 +6,5 @@ interface Repository<Model> {
      * @param device: String, identifies the device
      * @param n: Int, limits the query to the needed amount of data points
      */
-    fun getLastMeasurements(device: Int, n: Int): MutableList<Model>
+    fun getLastMeasurements(device: String, n: Int): MutableList<Model>
 }
