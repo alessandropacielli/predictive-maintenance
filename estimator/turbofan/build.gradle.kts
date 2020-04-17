@@ -21,10 +21,13 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-stream")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.deeplearning4j:deeplearning4j-core:1.0.0-beta6")
 	implementation("org.nd4j:nd4j-native-platform:1.0.0-beta6")
-	implementation("com.influxdb:influxdb-client-java:1.6.0")
 	implementation("org.influxdb:influxdb-java:2.17")
+	implementation("uk.co.jemos.podam:podam:7.2.3.RELEASE")
+	implementation("com.squareup.okio:okio:1.17.5")
+	implementation("com.squareup.okhttp3:okhttp:3.14.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
