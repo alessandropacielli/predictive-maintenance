@@ -2,7 +2,7 @@ package com.alessandropacielli.turbofan.data;
 
 
 import com.alessandropacielli.turbofan.data.influxdb.InfluxDBTurbofanModel;
-import com.alessandropacielli.turbofan.data.influxdb.InfluxDBTurbofanRepository;
+import com.alessandropacielli.turbofan.data.influxdb.InfluxDBRepository;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
@@ -11,10 +11,8 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InfluxDBRepositoryTest extends RepositoryTest<InfluxDBTurbofanModel> {
 
@@ -48,7 +46,7 @@ public class InfluxDBRepositoryTest extends RepositoryTest<InfluxDBTurbofanModel
 
     @Override
     public Repository<InfluxDBTurbofanModel> getRepository() {
-        InfluxDBTurbofanRepository repo = new InfluxDBTurbofanRepository(this.client, "test", "normalized");
+        InfluxDBRepository repo = new InfluxDBRepository(this.client, "test", "normalized", InfluxDBTurbofanModel.class);
         return repo;
     }
 
