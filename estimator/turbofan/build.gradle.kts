@@ -22,6 +22,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-stream")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
 	implementation("org.deeplearning4j:deeplearning4j-core:1.0.0-beta6")
 	implementation("org.nd4j:nd4j-native-platform:1.0.0-beta6")
 	implementation("org.influxdb:influxdb-java:2.17")
