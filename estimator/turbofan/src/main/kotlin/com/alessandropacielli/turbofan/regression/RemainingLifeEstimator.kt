@@ -1,6 +1,6 @@
 package com.alessandropacielli.turbofan.regression
 
-interface RemainingLifeEstimator<DeviceType> {
+interface RemainingLifeEstimator {
 
 
     /**
@@ -19,10 +19,10 @@ interface RemainingLifeEstimator<DeviceType> {
      * Obtain a prediction given a list of data points for the device
      * @param values: The list of data points, its length should be equal to the return value of {@link getSequenceLength}
      */
-    // fun predict(values: List<DeviceType>): Double
+    // fun <DeviceType> predict(values: List<DeviceType>): Double
 
     /**
      * Returns the number of data points needed to perform the regression
      */
-    fun getSequenceLength(): Long
+    fun getSequenceLength(): Int
 }
