@@ -1,8 +1,8 @@
 package com.alessandropacielli.turbofan.data;
 
 
-import com.alessandropacielli.turbofan.data.influxdb.InfluxDBTurbofanModel;
 import com.alessandropacielli.turbofan.data.influxdb.InfluxDBRepository;
+import com.alessandropacielli.turbofan.models.TurbofanModel;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InfluxDBRepositoryTest extends RepositoryTest<InfluxDBTurbofanModel> {
+public class InfluxDBRepositoryTest extends RepositoryTest<TurbofanModel> {
 
     private static final String INFLUXDB_HOST = "http://localhost:8086"; // TODO spin up test container
     private static final String INFLUXDB_USER = "root";
@@ -45,17 +45,17 @@ public class InfluxDBRepositoryTest extends RepositoryTest<InfluxDBTurbofanModel
     }
 
     @Override
-    public Repository<InfluxDBTurbofanModel> getRepository() {
-        InfluxDBRepository repo = new InfluxDBRepository(this.client, "test", "normalized", InfluxDBTurbofanModel.class);
+    public Repository<TurbofanModel> getRepository() {
+        InfluxDBRepository repo = new InfluxDBRepository(this.client, "test", "normalized", TurbofanModel.class);
         return repo;
     }
 
     @Override
-    public List<InfluxDBTurbofanModel> generateFakeData(String device, int n) {
-        LinkedList<InfluxDBTurbofanModel> fakeData = new LinkedList<>();
+    public List<TurbofanModel> generateFakeData(String device, int n) {
+        LinkedList<TurbofanModel> fakeData = new LinkedList<>();
         PodamFactory podam = new PodamFactoryImpl();
         for(int i = 0; i < n; i++) {
-            InfluxDBTurbofanModel mock = podam.manufacturePojo(InfluxDBTurbofanModel.class);
+            TurbofanModel mock = podam.manufacturePojo(TurbofanModel.class);
             mock.setTime(Instant.now());
             mock.setDevice("test");
             fakeData.addFirst(mock);
@@ -64,7 +64,7 @@ public class InfluxDBRepositoryTest extends RepositoryTest<InfluxDBTurbofanModel
     }
 
     @Override
-    public void insertFakeData(List<InfluxDBTurbofanModel> fakeData) {
+    public void insertFakeData(List<TurbofanModel> fakeData) {
         fakeData.forEach(p -> this.mapper.save(p));
     }
 }

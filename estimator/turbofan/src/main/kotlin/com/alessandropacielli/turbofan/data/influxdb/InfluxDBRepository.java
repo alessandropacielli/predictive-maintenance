@@ -1,7 +1,7 @@
 package com.alessandropacielli.turbofan.data.influxdb;
 
 import com.alessandropacielli.turbofan.data.Repository;
-import org.bytedeco.librealsense.device;
+import com.alessandropacielli.turbofan.models.TurbofanModel;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
@@ -39,9 +39,9 @@ public class InfluxDBRepository<Model> implements Repository<Model> {
         return mapper.query(query, clazz);
     }
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         InfluxDB client = InfluxDBFactory.connect("http://localhost:8086");
-        InfluxDBRepository repo = new InfluxDBRepository(client, "test", "normalized", InfluxDBTurbofanModel.class);
+        InfluxDBRepository<TurbofanModel> repo = new InfluxDBRepository<>(client, "test", "normalized", TurbofanModel.class);
         System.out.println(repo.getLastMeasurements("test", 10));
     }
 
