@@ -2,13 +2,22 @@ package com.alessandropacielli.turbofan.models;
 
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.Instant;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Measurement(name = "normalized", database = "test")
-public class TurbofanModel implements Serializable {
+public class TurbofanModel implements Model {
+
+    private static final List<String> fieldsOrder = Arrays.asList("setting1", "setting2", "setting3", "cycle",
+            "s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11",
+            "s12", "s13", "s14", "s15", "s16", "s17", "s18", "s19", "s20", "s21");
 
     @Column(name = "time")
     private Instant time;
@@ -90,6 +99,24 @@ public class TurbofanModel implements Serializable {
 
     @Column(name = "device", tag = true)
     private String device;
+
+    @Override
+    public double[] toDoubleArray() {
+        int numFields = fieldsOrder.size();
+        double [] result = new double[numFields];
+        for(int i = 0; i < numFields; i++) {
+            try {
+                result[i] = this.getClass().getDeclaredField(fieldsOrder.get(i)).getDouble(this);
+            } catch (IllegalAccessException | NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /*
+     * GENERATED CONSTRUCTORS, ACCESSORS, TOSTRING, EQUALS AND HASHCODE
+     */
 
     public TurbofanModel() {
 
