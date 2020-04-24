@@ -1,11 +1,12 @@
 package com.alessandropacielli;
 
-import com.alessandropacielli.turbofan.control.MyHandler;
+import com.alessandropacielli.turbofan.control.TurbofanHandler;
 import com.alessandropacielli.turbofan.data.Repository;
 import com.alessandropacielli.turbofan.data.influxdb.InfluxDBRepository;
 import com.alessandropacielli.turbofan.models.TurbofanModel;
 import com.alessandropacielli.turbofan.regression.RemainingLifeEstimator;
 import com.alessandropacielli.turbofan.regression.tensorflow.serving.HttpRnnEstimatorProxy;
+import com.google.gson.Gson;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,15 @@ public class AppConfig {
     }
 
     @Bean
-    public Function<String, String> handler() {
-        return new MyHandler();
+    public Gson gson() {
+        return new Gson();
+    }
+
+    @Bean
+    public Function<String, String> handler(@Autowired Repository<TurbofanModel> repo,
+                                            @Autowired RemainingLifeEstimator<TurbofanModel> estimator,
+                                            @Autowired Gson gson) {
+        return new TurbofanHandler(repo, estimator, gson);
     }
 
     @Bean

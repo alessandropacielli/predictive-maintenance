@@ -13,7 +13,7 @@ public interface RemainingLifeEstimator<DeviceType extends TransformableToDouble
      */
     double predict(double[][] sequence);
 
-    /**
+    /*
      * Obtain a prediction for the remaining useful life of a device given an NDArray
      * @param sequence: The array should have a shape of (N, F), where N is equal to the return value of {@link this.getSequenceLenght} and F is the dimension of the data point
      */
