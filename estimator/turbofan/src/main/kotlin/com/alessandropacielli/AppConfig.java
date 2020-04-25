@@ -49,7 +49,7 @@ public class AppConfig {
     }
 
     @Bean
-    public RemainingLifeEstimator rulEstimator(@Value("http://localhost:8501/v1/models/turbofan:predict") String url,
+    public RemainingLifeEstimator rulEstimator(@Value("http://localhost:8501/v1/models/turbofan:predict}") String url,
                                                @Value("50") int sequenceLength,
                                                @Autowired RestTemplate restTemplate) {
 

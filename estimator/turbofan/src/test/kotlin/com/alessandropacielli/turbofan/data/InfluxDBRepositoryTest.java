@@ -46,7 +46,8 @@ public class InfluxDBRepositoryTest extends RepositoryTest<TurbofanModel> {
 
     @Override
     public Repository<TurbofanModel> getRepository() {
-        return new InfluxDBRepository<>(this.client, "test", "normalized", TurbofanModel.class);
+        InfluxDBRepository repo = new InfluxDBRepository(this.client, "test", "normalized", TurbofanModel.class);
+        return repo;
     }
 
     @Override
