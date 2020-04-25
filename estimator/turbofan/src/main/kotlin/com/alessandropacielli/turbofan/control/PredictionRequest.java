@@ -1,21 +1,25 @@
 package com.alessandropacielli.turbofan.control;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class PredictionRequest {
     private String device;
-    private LocalDateTime timestamp;
+    private long timestamp;
 
     public PredictionRequest(String device, LocalDateTime timestamp) {
         this.device = device;
-        this.timestamp = timestamp;
+        this.timestamp = timestamp.atZone(ZoneId.systemDefault()).toEpochSecond();
     }
 
     public String getDevice() {
         return device;
     }
 
-    public LocalDateTime getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 }
