@@ -35,6 +35,7 @@ public class HttpRnnEstimatorProxy<DeviceType extends TransformableToDoubleArray
     }
 
     @Override
+    // TODO throw exception!
     public double predict(List<DeviceType> sequence) {
         double[][] input = sequence.stream()
                 .map(TransformableToDoubleArray::toDoubleArray)

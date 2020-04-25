@@ -30,6 +30,7 @@ public class InfluxDBRepository<Model> implements Repository<Model> {
 
     @NotNull
     @Override
+    // TODO throw exception if something goes wrong
     public List<Model> getLastMeasurements(@NotNull String device, int n) {
         Query query = select()
                 .from(database, measurement)
