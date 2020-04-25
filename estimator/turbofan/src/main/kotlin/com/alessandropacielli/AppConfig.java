@@ -27,7 +27,7 @@ public class AppConfig {
     }
 
     @Bean
-    public InfluxDB influxDB(@Value("http://localhost:8086") String url) {
+    public InfluxDB influxDB(@Value("${repository.influxdb.url}") String url) {
         return InfluxDBFactory.connect(url);
     }
 
@@ -49,8 +49,8 @@ public class AppConfig {
     }
 
     @Bean
-    public RemainingLifeEstimator rulEstimator(@Value("http://localhost:8501/v1/models/turbofan:predict") String url,
-                                               @Value("50") int sequenceLength,
+    public RemainingLifeEstimator rulEstimator(@Value("${estimator.tensorflow.serving.url}") String url,
+                                               @Value("${estimator.sequence_length}") int sequenceLength,
                                                @Autowired RestTemplate restTemplate) {
 
         return new HttpRnnEstimatorProxy(url, sequenceLength, restTemplate);
@@ -58,8 +58,8 @@ public class AppConfig {
 
     @Bean
     public Repository<TurbofanModel> turbofanModelRepository(@Autowired InfluxDB influxDB,
-                                                             @Value("predictive-maintenance") String database,
-                                                             @Value("turbofan") String measurement,
+                                                             @Value("${repository.influxdb.database}") String database,
+                                                             @Value("${repository.influxdb.measurement}") String measurement,
                                                              @Autowired Class<TurbofanModel> modelClass) {
         return new InfluxDBRepository<>(influxDB, database, measurement, modelClass);
     }
