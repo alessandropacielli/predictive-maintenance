@@ -1,6 +1,6 @@
 package com.alessandropacielli.turbofan.data.influxdb;
 
-import com.alessandropacielli.turbofan.data.Repository;
+import com.alessandropacielli.turbofan.data.TimeSeriesRepository;
 import com.alessandropacielli.turbofan.models.TurbofanModel;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.influxdb.querybuilder.BuiltQuery.QueryBuilder.*;
 
-public class InfluxDBRepository<Model> implements Repository<Model> {
+public class InfluxDBRepository<Model> implements TimeSeriesRepository<Model> {
 
     private InfluxDB client;
     private InfluxDBMapper mapper;

@@ -1,6 +1,6 @@
 package com.alessandropacielli.turbofan.control;
 
-import com.alessandropacielli.turbofan.data.Repository;
+import com.alessandropacielli.turbofan.data.TimeSeriesRepository;
 import com.alessandropacielli.turbofan.models.TurbofanModel;
 import com.alessandropacielli.turbofan.regression.RemainingLifeEstimator;
 import com.google.gson.Gson;
@@ -11,11 +11,11 @@ import java.util.List;
 public class TurbofanHandler implements Handler {
 
     private Gson gson;
-    private Repository<TurbofanModel> repo;
+    private TimeSeriesRepository<TurbofanModel> repo;
     private RemainingLifeEstimator<TurbofanModel> estimator;
     private int sequenceLength;
 
-    public TurbofanHandler(Repository<TurbofanModel> repo, RemainingLifeEstimator<TurbofanModel> estimator, Gson gson) {
+    public TurbofanHandler(TimeSeriesRepository<TurbofanModel> repo, RemainingLifeEstimator<TurbofanModel> estimator, Gson gson) {
         this.gson = gson;
         this.estimator = estimator;
         this.repo = repo;

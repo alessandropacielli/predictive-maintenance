@@ -10,13 +10,13 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 
 @SpringBootTest
-public abstract class RepositoryTest<T> {
+public abstract class TimeSeriesRepositoryTest<T> {
 
 
     private static final int N = 50;
     private static final String DEVICE = "test";
 
-    private Repository<T> repo;
+    private TimeSeriesRepository<T> repo;
     private List<T> fakeData;
 
 
@@ -41,7 +41,7 @@ public abstract class RepositoryTest<T> {
         assertEquals(mostRecent, result);
     }
 
-    public abstract Repository<T> getRepository();
+    public abstract TimeSeriesRepository<T> getRepository();
 
     public abstract List<T> generateFakeData(String device, int n);
 

@@ -2,7 +2,7 @@ package com.alessandropacielli.turbofan.data;
 
 import java.util.List;
 
-public interface Repository<Model> {
+public interface TimeSeriesRepository<Model> {
     /**
      * Returns the last n measurements for the required device
      *  @param device : String, identifies the device

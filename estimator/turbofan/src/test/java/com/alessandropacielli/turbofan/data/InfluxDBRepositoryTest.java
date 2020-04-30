@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InfluxDBRepositoryTest extends RepositoryTest<TurbofanModel> {
+public class InfluxDBRepositoryTest extends TimeSeriesRepositoryTest<TurbofanModel> {
 
     private static final String INFLUXDB_HOST = "http://localhost:8086"; // TODO spin up test container
     private static final String INFLUXDB_USER = "root";
@@ -45,7 +45,7 @@ public class InfluxDBRepositoryTest extends RepositoryTest<TurbofanModel> {
     }
 
     @Override
-    public Repository<TurbofanModel> getRepository() {
+    public TimeSeriesRepository<TurbofanModel> getRepository() {
         return new InfluxDBRepository<>(this.client, "test", "normalized", TurbofanModel.class);
     }
 

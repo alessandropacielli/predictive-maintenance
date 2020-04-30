@@ -1,7 +1,7 @@
 package com.alessandropacielli;
 
 import com.alessandropacielli.turbofan.control.TurbofanHandler;
-import com.alessandropacielli.turbofan.data.Repository;
+import com.alessandropacielli.turbofan.data.TimeSeriesRepository;
 import com.alessandropacielli.turbofan.data.influxdb.InfluxDBRepository;
 import com.alessandropacielli.turbofan.models.TurbofanModel;
 import com.alessandropacielli.turbofan.regression.RemainingLifeEstimator;
@@ -42,7 +42,7 @@ public class AppConfig {
     }
 
     @Bean
-    public Function<String, String> handler(@Autowired Repository<TurbofanModel> repo,
+    public Function<String, String> handler(@Autowired TimeSeriesRepository<TurbofanModel> repo,
                                             @Autowired RemainingLifeEstimator<TurbofanModel> estimator,
                                             @Autowired Gson gson) {
         return new TurbofanHandler(repo, estimator, gson);
@@ -57,10 +57,10 @@ public class AppConfig {
     }
 
     @Bean
-    public Repository<TurbofanModel> turbofanModelRepository(@Autowired InfluxDB influxDB,
-                                                             @Value("${repository.influxdb.database}") String database,
-                                                             @Value("${repository.influxdb.measurement}") String measurement,
-                                                             @Autowired Class<TurbofanModel> modelClass) {
+    public TimeSeriesRepository<TurbofanModel> turbofanModelRepository(@Autowired InfluxDB influxDB,
+                                                                       @Value("${repository.influxdb.database}") String database,
+                                                                       @Value("${repository.influxdb.measurement}") String measurement,
+                                                                       @Autowired Class<TurbofanModel> modelClass) {
         return new InfluxDBRepository<>(influxDB, database, measurement, modelClass);
     }
 }
