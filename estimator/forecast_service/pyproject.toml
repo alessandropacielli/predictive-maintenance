@@ -12,6 +12,7 @@ numpy = "^1.18.2"
 influxdb = "^5.3.0"
 keras = "^2.3.1"
 kafka-python = "^2.0.1"
+scikit-learn = "^0.22.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.1"
