@@ -1,18 +1,17 @@
-from abc import ABC, abstractmethod
+from influxdb import DataFrameClient
 
-class DB(ABC):
-
-  @abstractmethod
-  def get_last(self, n, device):
-    pass
-
-class InfluxDB(DB):
+class InfluxDB():
 
   def __init__(self, host, port, database):
-    from influxdb import DataFrameClient
     super().__init__()
     self.client = DataFrameClient(host=host, port=port, database=database)
 
-  def get_last(self, n, device):
-    query = 'SELECT * FROM normalized WHERE device=$device ORDER BY time DESC LIMIT ' + str(int(n)) 
-    return self.client.query(query, bind_params={'device': device})['normalized'].drop('device', axis=1)
+  def get_last(self, n, device, measurement, order=None):
+    query = 'SELECT * FROM ' + str(measurement) + ' WHERE device=$device ORDER BY time DESC LIMIT ' + str(int(n)) 
+    result = self.client.query(query, bind_params={'device': device})[measurement].drop('device', axis=1)
+    print(result)
+
+    if order is not None:
+      result = result[order]
+
+    return result
