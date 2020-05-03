@@ -1,6 +1,6 @@
 import joblib
 
-class MinMaxScaler():
+class PickledScaler():
   def __init__(self, path):
     super().__init__()
     self.scaler = joblib.load(path)
