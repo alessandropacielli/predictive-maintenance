@@ -2,6 +2,7 @@ from flask import Flask, request
 from forecast_service.estimator import RnnEstimator
 from forecast_service.normalization import PickledScaler
 from forecast_service.db import InfluxDB
+import numpy as np
 
 app = Flask(__name__)
 
@@ -17,6 +18,7 @@ sequence_cols.extend(sensor_cols)
 def turbofan():
   device = int(request.args['device'])
   measurement = request.args['measurement']
-  data = db.get_last(estimator.get_sequence_length(), device, measurement, order=sequence_cols)
-  data_norm = preprocessor.transform(data)
-  return estimator.predict(data_norm)
+  sequence_length = estimator.get_sequence_length()
+  data = db.get_last(sequence_length, device, measurement, order=sequence_cols)
+  data_norm = np.array(preprocessor.transform(data))
+  return { 'prediction': str(estimator.predict(np.reshape(data_norm, (1, sequence_length, len(sequence_cols))))[0][0]) }
