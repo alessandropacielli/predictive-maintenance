@@ -9,7 +9,6 @@ class InfluxDB():
   def get_last(self, n, device, measurement, order=None):
     query = 'SELECT * FROM ' + str(measurement) + ' WHERE device=$device ORDER BY time DESC LIMIT ' + str(int(n)) 
     result = self.client.query(query, bind_params={'device': device})[measurement].drop('device', axis=1)
-    print(result)
 
     if order is not None:
       result = result[order]
