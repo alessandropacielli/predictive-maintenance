@@ -14,10 +14,9 @@ sensor_cols = ['s' + str(i) for i in range(1,22)]
 sequence_cols = ['setting1', 'setting2', 'setting3', 'cycle']
 sequence_cols.extend(sensor_cols)
 
-@app.route('/turbofan', methods=['GET', 'POST'])
-def turbofan():
-  device = int(request.args['device'])
-  measurement = request.args['measurement']
+@app.route('/<measurement>/<device>', methods=['GET', 'POST'])
+def turbofan(measurement, device):
+  device = int(device)
   sequence_length = estimator.get_sequence_length()
   data = db.get_last(sequence_length, device, measurement, order=sequence_cols)
   data_norm = np.array(preprocessor.transform(data))
