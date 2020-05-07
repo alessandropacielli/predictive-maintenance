@@ -40,7 +40,7 @@ class TestInfluxDB(unittest.TestCase, TestDB):
     today = datetime.now()
     for i in range(0, 100):
        json_body.append({
-         'measurement': 'normalized',
+         'measurement': 'test',
          'time': today + timedelta(seconds=i),
          'tags': {
            'device': 'test'
@@ -54,7 +54,8 @@ class TestInfluxDB(unittest.TestCase, TestDB):
 
     self.client.write_points(json_body, database='test')
 
-    self.db = InfluxDB('127.0.0.1', 8086, 'test')
+    self.db = InfluxDB('127.0.0.1', 8086, 'test', 'test')
   
   def tearDown(self):
-    self.client.drop_database('test')
+    pass
+    # self.client.drop_database('test')
