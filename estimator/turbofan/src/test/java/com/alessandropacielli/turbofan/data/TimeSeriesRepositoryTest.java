@@ -14,7 +14,7 @@ public abstract class TimeSeriesRepositoryTest<T> {
 
 
     private static final int N = 50;
-    private static final String DEVICE = "test";
+    private static final int DEVICE = 1;
 
     private TimeSeriesRepository<T> repo;
     private List<T> fakeData;
@@ -43,7 +43,7 @@ public abstract class TimeSeriesRepositoryTest<T> {
 
     public abstract TimeSeriesRepository<T> getRepository();
 
-    public abstract List<T> generateFakeData(String device, int n);
+    public abstract List<T> generateFakeData(int device, int n);
 
     public abstract void insertFakeData(List<T> fakeData);
 

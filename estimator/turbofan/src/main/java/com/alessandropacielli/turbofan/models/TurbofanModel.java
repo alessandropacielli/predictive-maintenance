@@ -2,17 +2,10 @@ package com.alessandropacielli.turbofan.models;
 
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
-import uk.co.jemos.podam.api.PodamFactory;
-import uk.co.jemos.podam.api.PodamFactoryImpl;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-@Measurement(name = "normalized", database = "test")
+@Measurement(name = "turbofan")
 public class TurbofanModel implements Model {
 
     private static final List<String> fieldsOrder = Arrays.asList("setting1", "setting2", "setting3", "cycle",
@@ -98,7 +91,7 @@ public class TurbofanModel implements Model {
     private double s21;
 
     @Column(name = "device", tag = true)
-    private String device;
+    private int device;
 
     @Override
     public double[] toDoubleArray() {
@@ -148,7 +141,7 @@ public class TurbofanModel implements Model {
                          double s19,
                          double s20,
                          double s21,
-                         String device) {
+                         int device) {
         this();
         this.time = time;
         this.device = device;
@@ -387,17 +380,17 @@ public class TurbofanModel implements Model {
         this.s21 = s21;
     }
 
-    public String getDevice() {
+    public int getDevice() {
         return device;
     }
 
-    public void setDevice(String device) {
+    public void setDevice(int device) {
         this.device = device;
     }
 
     @Override
     public String toString() {
-        return "InfluxDBTurbofanModel{" +
+        return "TurbofanModel{" +
                 "time=" + time +
                 ", cycle=" + cycle +
                 ", setting1=" + setting1 +
@@ -459,7 +452,7 @@ public class TurbofanModel implements Model {
                 Double.compare(that.s20, s20) == 0 &&
                 Double.compare(that.s21, s21) == 0 &&
                 time.equals(that.time) &&
-                device.equals(that.device);
+                device == that.device;
     }
 
     @Override

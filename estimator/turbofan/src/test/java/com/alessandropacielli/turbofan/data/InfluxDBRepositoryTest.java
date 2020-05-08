@@ -50,13 +50,13 @@ public class InfluxDBRepositoryTest extends TimeSeriesRepositoryTest<TurbofanMod
     }
 
     @Override
-    public List<TurbofanModel> generateFakeData(String device, int n) {
+    public List<TurbofanModel> generateFakeData(int device, int n) {
         LinkedList<TurbofanModel> fakeData = new LinkedList<>();
         PodamFactory podam = new PodamFactoryImpl();
         for(int i = 0; i < n; i++) {
             TurbofanModel mock = podam.manufacturePojo(TurbofanModel.class);
             mock.setTime(Instant.now());
-            mock.setDevice("test");
+            mock.setDevice(1);
             fakeData.addFirst(mock);
         }
         return fakeData;

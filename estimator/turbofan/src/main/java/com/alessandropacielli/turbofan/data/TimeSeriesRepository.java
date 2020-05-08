@@ -9,5 +9,5 @@ public interface TimeSeriesRepository<Model> {
      * @param n :      Int, limits the query to the needed amount of data points
      * @return
      */
-    public List<Model> getLastMeasurements(String device, int n);
+    public List<Model> getLastMeasurements(int device, int n);
 }

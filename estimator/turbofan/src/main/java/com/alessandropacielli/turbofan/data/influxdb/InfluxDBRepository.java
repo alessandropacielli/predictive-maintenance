@@ -31,7 +31,7 @@ public class InfluxDBRepository<Model> implements TimeSeriesRepository<Model> {
     @NotNull
     @Override
     // TODO throw exception if something goes wrong
-    public List<Model> getLastMeasurements(@NotNull String device, int n) {
+    public List<Model> getLastMeasurements(int device, int n) {
         Query query = select()
                 .from(database, measurement)
                 .orderBy(desc())
@@ -40,10 +40,10 @@ public class InfluxDBRepository<Model> implements TimeSeriesRepository<Model> {
         return mapper.query(query, clazz);
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         InfluxDB client = InfluxDBFactory.connect("http://localhost:8086");
-        InfluxDBRepository<TurbofanModel> repo = new InfluxDBRepository<>(client, "test", "normalized", TurbofanModel.class);
-        System.out.println(repo.getLastMeasurements("test", 10));
+        InfluxDBRepository<TurbofanModel> repo = new InfluxDBRepository<>(client, "predictive-maintenance", "turbofan", TurbofanModel.class);
+        System.out.println(repo.getLastMeasurements(3, 10));
     }
 
 }
