@@ -3,10 +3,12 @@ package com.alessandropacielli;
 import com.alessandropacielli.turbofan.control.TurbofanHandler;
 import com.alessandropacielli.turbofan.data.TimeSeriesRepository;
 import com.alessandropacielli.turbofan.data.influxdb.InfluxDBRepository;
+import com.alessandropacielli.turbofan.models.TransformableToDoubleArray;
 import com.alessandropacielli.turbofan.models.TurbofanModel;
 import com.alessandropacielli.turbofan.regression.RemainingLifeEstimator;
 import com.alessandropacielli.turbofan.regression.tensorflow.serving.HttpRnnEstimatorProxy;
 import com.google.gson.Gson;
+import org.apache.commons.math3.util.DoubleArray;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +18,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Configuration
 public class AppConfig {
-
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-        return restTemplateBuilder.build();
-    }
-
     @Bean
     public InfluxDB influxDB(@Value("${repository.influxdb.url}") String url) {
         return InfluxDBFactory.connect(url);
@@ -35,27 +38,13 @@ public class AppConfig {
     public Class<TurbofanModel> influxDBTurbofanModelClass() {
         return TurbofanModel.class;
     }
-
     @Bean
-    public Gson gson() {
-        return new Gson();
+    public Supplier<String> supplier(@Autowired TimeSeriesRepository<TurbofanModel> influx, @Autowired Gson gson) {
+        return () -> gson.toJson(influx.getLastMeasurements(3, 50).stream()
+                    .map(TransformableToDoubleArray::toDoubleArray)
+                    .map(array -> DoubleStream.of(array).boxed().collect(Collectors.toList()))
+                    .collect(Collectors.toList()));
     }
-
-    @Bean
-    public Function<String, String> handler(@Autowired TimeSeriesRepository<TurbofanModel> repo,
-                                            @Autowired RemainingLifeEstimator<TurbofanModel> estimator,
-                                            @Autowired Gson gson) {
-        return new TurbofanHandler(repo, estimator, gson);
-    }
-
-    @Bean
-    public RemainingLifeEstimator rulEstimator(@Value("${estimator.tensorflow.serving.url}") String url,
-                                               @Value("${estimator.sequence_length}") int sequenceLength,
-                                               @Autowired RestTemplate restTemplate) {
-
-        return new HttpRnnEstimatorProxy(url, sequenceLength, restTemplate);
-    }
-
     @Bean
     public TimeSeriesRepository<TurbofanModel> turbofanModelRepository(@Autowired InfluxDB influxDB,
                                                                        @Value("${repository.influxdb.database}") String database,
