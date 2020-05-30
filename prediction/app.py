@@ -23,7 +23,7 @@ state = app.Table(config.APP_NAME + '_state', default=list)
 
 @app.agent(input_topic)
 async def handle(stream):
-    async for measurement in stream:
+    async for measurement in stream.group_by(TurbofanMeasurement.device):
       device_buffer = state[measurement.device]
 
       insert_point = bisect.bisect(list(map(lambda x: x['timestamp'], device_buffer)), measurement.data['timestamp'])
