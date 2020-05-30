@@ -1,6 +1,6 @@
 import faust
 from prediction.config import Config
-from prediction.models import TurbofanMeasurement
+from prediction.turbofan.models import TurbofanMeasurement
 from prediction.preprocessing import PickledPreprocessor
 from prediction.estimator import RnnEstimator
 import pandas as pd
