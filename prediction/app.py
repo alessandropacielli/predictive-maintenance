@@ -3,7 +3,9 @@ from prediction.config import Config
 from prediction.turbofan.models import TurbofanMeasurement
 from prediction.preprocessing import PickledPreprocessor
 from prediction.estimator import RnnEstimator
+import sys
 import pandas as pd
+import numpy as np
 import bisect
 
 config = Config()
@@ -18,7 +20,11 @@ preprocessor = PickledPreprocessor(config.PREPROCESSOR_PATH)
 estimator = RnnEstimator(config.ESTIMATOR_PATH)
 N = estimator.get_sequence_length()
 
-input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement, partitions=8)
+schema = faust.Schema(
+    value_serializer='json',
+)
+
+input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement, partitions=8, schema=schema)
 state = app.Table(config.APP_NAME + '_state', default=list)
 
 @app.agent(input_topic)
@@ -30,12 +36,20 @@ async def handle(stream):
       device_buffer.insert(insert_point, measurement.data)      
       
       if len(device_buffer) > N:
-        device_buffer.pop(0)
-        df = pd.DataFrame(device_buffer)[TurbofanMeasurement.column_order]
-        df = preprocessor.transform(df)
+        try:
+          device_buffer.pop(0)
+          df = pd.DataFrame(device_buffer)
+          df = df[TurbofanMeasurement.get_column_order()]
+          preprocessed = preprocessor.transform(df)
 
-        prediction = estimator.predict(df)
+          data = np.reshape(preprocessed, (1, N, 25))
+          
+          print(data)
+          prediction = estimator.predict(data)
+          print(prediction)
+        except:
+          print("Error: " + str(sys.exc_info()))
 
-      print(device_buffer)
+      # print(device_buffer)
       
       state[measurement.device] = device_buffer
