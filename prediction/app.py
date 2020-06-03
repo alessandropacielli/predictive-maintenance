@@ -22,12 +22,8 @@ preprocessor = PickledPreprocessor(config.PREPROCESSOR_PATH)
 estimator = RnnEstimator(config.ESTIMATOR_PATH)
 N = estimator.get_sequence_length()
 
-schema = faust.Schema(
-    value_serializer='json',
-)
-
-input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement, schema=schema)
-output_topic = app.topic(config.OUTPUT_TOPIC, value_type=PredictionEvent, schema=schema)
+input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement)
+output_topic = app.topic(config.OUTPUT_TOPIC, value_type=PredictionEvent)
 state = app.Table(config.APP_NAME + '_state', default=list)
 
 @app.agent(input_topic)
