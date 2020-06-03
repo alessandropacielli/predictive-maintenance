@@ -40,4 +40,3 @@ for k, i in test_49.iterrows():
   message['data'] = data
   
   producer.send('turbofan_data', message)
-  print('dio')
