@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import random
 
-def get_sample_test_data():
+def sample_test_data():
   test_data_path = '../estimator/training/data/PM_test.txt'
   columns = ['id', 'cycle', 'setting1', 'setting2', 'setting3', 's1', 's2', 's3', 
     's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11','s12', 's13', 's14', 
@@ -17,6 +17,9 @@ def get_sample_test_data():
   df.columns = columns
   df.sort_values(['id', 'cycle'], inplace=True)
 
-  random_id = random.randint(1, df.max()['id'])
+  random_id = -1
+  while len(df[df['id'] == random_id]) < 50:
+    random_id = random.randint(1, df.max()['id'])
+  
   random_data = df[df['id'] == random_id]
   return random_data[sequence_cols]
