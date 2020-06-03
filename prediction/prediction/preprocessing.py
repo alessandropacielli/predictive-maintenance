@@ -1,4 +1,5 @@
 import joblib
+import pandas as pd
 
 class PickledPreprocessor():
   def __init__(self, path):
@@ -7,4 +8,9 @@ class PickledPreprocessor():
 
 
   def transform(self, data):
-    return self.scaler.transform(data)
+    normalized_data = pd.DataFrame(
+      self.scaler.fit_transform(data), 
+      index=data.index
+    )
+
+    return normalized_data

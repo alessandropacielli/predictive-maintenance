@@ -28,7 +28,6 @@ class RnnEstimatorTest(unittest.TestCase):
     len_random_data = len(random_data)
 
     random_data_sequences = np.array([random_data[start:stop].values for start, stop in zip(range(0, len_random_data - sequence_length), range(sequence_length, len_random_data))])
-    print(self.estimator.predict(random_data_sequences))
 
     # Assert prediction of keras model is the same as the estimator
     np.testing.assert_equal(self.estimator.predict(random_data_sequences), loaded_model.predict(random_data_sequences))
