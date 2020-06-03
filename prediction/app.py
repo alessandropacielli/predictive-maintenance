@@ -1,12 +1,14 @@
 import faust
 from prediction.config import Config
-from prediction.turbofan.models import TurbofanMeasurement
+from prediction.models.turbofan import TurbofanMeasurement
+from prediction.models.prediction import PredictionEvent 
 from prediction.preprocessing import PickledPreprocessor
 from prediction.estimator import RnnEstimator
 import sys
 import pandas as pd
 import numpy as np
 import bisect
+import time
 
 config = Config()
 
@@ -24,7 +26,8 @@ schema = faust.Schema(
     value_serializer='json',
 )
 
-input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement, partitions=8, schema=schema)
+input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement, schema=schema)
+output_topic = app.topic(config.OUTPUT_TOPIC, value_type=PredictionEvent, schema=schema)
 state = app.Table(config.APP_NAME + '_state', default=list)
 
 @app.agent(input_topic)
@@ -34,22 +37,21 @@ async def handle(stream):
 
       insert_point = bisect.bisect(list(map(lambda x: x['timestamp'], device_buffer)), measurement.data['timestamp'])
       device_buffer.insert(insert_point, measurement.data)      
-      
+
       if len(device_buffer) > N:
-        try:
-          device_buffer.pop(0)
-          df = pd.DataFrame(device_buffer)
-          df = df[TurbofanMeasurement.get_column_order()]
-          preprocessed = preprocessor.transform(df)
+        device_buffer.pop(0)
+        df = pd.DataFrame(device_buffer)
+        df = df[TurbofanMeasurement.get_column_order()]
+        preprocessed = preprocessor.transform(df)
 
-          data = np.reshape(preprocessed, (1, N, 25))
-          
-          print(data)
-          prediction = estimator.predict(data)
-          print(prediction)
-        except:
-          print("Error: " + str(sys.exc_info()))
+        data = np.reshape(preprocessed.to_numpy(), (1, N, 25))
+        
+        prediction = estimator.predict(data)
 
-      # print(device_buffer)
-      
+        output = PredictionEvent(timestamp=time.time_ns(), device=measurement.device, prediction=float(prediction[0][0]))
+
+        await output_topic.send(value=output)
+
+
       state[measurement.device] = device_buffer
+
