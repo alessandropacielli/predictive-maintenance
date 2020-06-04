@@ -32,11 +32,15 @@ test_49 = test_df[test_df['id'] == 49]
 
 j = 0
 for k, i in test_49.iterrows(): 
-  data = dict(i) 
-  data['timestamp'] = time.time_ns()
+
+
 
   message = dict()
   message['device'] = '1'
+  message['timestamp'] = time.time_ns()
+  data = dict(i) 
   message['data'] = data
+
+  print(message)
   
   producer.send('turbofan_data', message)

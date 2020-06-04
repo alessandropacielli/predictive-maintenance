@@ -12,6 +12,8 @@ class SortedCircularBuffer(Generic[T]):
     self.sorting_view = sorting_view
 
   def add(self, value: T):
+    mapped_value = self.sorting_view(value)
+    mapped_list = list(map(self.sorting_view, self.buffer))
     insert_point = bisect.bisect(list(map(self.sorting_view, self.buffer)), self.sorting_view(value))
     self.buffer.insert(insert_point, value)
 
@@ -20,6 +22,9 @@ class SortedCircularBuffer(Generic[T]):
 
   def get_n(self):
     return self.n
+
+  def get_len(self):
+    return len(self.buffer)
 
   def set_buffer(self, buffer: list):
     self.buffer = buffer

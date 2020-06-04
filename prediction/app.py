@@ -4,6 +4,7 @@ from prediction.models.turbofan import TurbofanMeasurement
 from prediction.models.prediction import PredictionEvent 
 from prediction.preprocessing import PickledPreprocessor
 from prediction.estimator import RnnEstimator
+from prediction.state import SortedCircularBuffer
 import sys
 import pandas as pd
 import numpy as np
@@ -15,7 +16,8 @@ config = Config()
 app = faust.App(
   config.APP_NAME,
   broker=config.BROKER_LIST,
-  stream_wait_empty=False
+  stream_wait_empty=False,
+  partitions=1
 )
 
 preprocessor = PickledPreprocessor(config.PREPROCESSOR_PATH)
@@ -26,17 +28,16 @@ input_topic = app.topic(config.INPUT_TOPIC, value_type=TurbofanMeasurement)
 output_topic = app.topic(config.OUTPUT_TOPIC, value_type=PredictionEvent)
 state = app.Table(config.APP_NAME + '_state', default=list)
 
+circular_buffer = SortedCircularBuffer[TurbofanMeasurement](N, lambda x: x['timestamp'])
+
 @app.agent(input_topic)
 async def handle(stream):
     async for measurement in stream.group_by(TurbofanMeasurement.device):
-      device_buffer = state[measurement.device]
+      circular_buffer.set_buffer(state[measurement.device])
+      circular_buffer.add(measurement.to_dict())
 
-      insert_point = bisect.bisect(list(map(lambda x: x['timestamp'], device_buffer)), measurement.data['timestamp'])
-      device_buffer.insert(insert_point, measurement.data)      
-
-      if len(device_buffer) > N:
-        device_buffer.pop(0)
-        df = pd.DataFrame(device_buffer)
+      if circular_buffer.get_len() == N:
+        df = pd.DataFrame(map(lambda x: x['data'], circular_buffer.get_buffer()))
         df = df[TurbofanMeasurement.get_column_order()]
         preprocessed = preprocessor.transform(df)
 
@@ -48,6 +49,5 @@ async def handle(stream):
 
         await output_topic.send(value=output)
 
-
-      state[measurement.device] = device_buffer
+      state[measurement.device] = circular_buffer.get_buffer() # Saves current state to RocksDB and to Kafka
 

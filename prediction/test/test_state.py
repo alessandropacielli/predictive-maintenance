@@ -34,13 +34,12 @@ class SortedCircularBufferTest(unittest.TestCase):
     assert buffer.get_buffer() == list(range(1000 - self.n, 1000))
   
   def test_sort_view(self):
-    buffer = SortedCircularBuffer[TurbofanMeasurement](self.n, lambda x: x.data['timestamp'])
+    buffer = SortedCircularBuffer[TurbofanMeasurement](self.n, lambda x: x.timestamp)
     values = []
 
     for i in range(1000):
       data = dict()
-      data['timestamp'] = i
-      values.append(TurbofanMeasurement(device='1', data=data))
+      values.append(TurbofanMeasurement(device='1', data=data, timestamp=time.time_ns()))
       buffer.add(values[i])
 
     assert buffer.get_buffer() == values[1000 - self.n : 1000]

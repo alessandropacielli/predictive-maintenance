@@ -2,7 +2,16 @@ import faust
 
 class TurbofanMeasurement(faust.Record, serializer='json'):
   device: str
+  timestamp: int
   data: dict
+
+
+  def to_dict(self):
+    return {
+      'device': self.device,
+      'timestamp': self.timestamp,      
+      'data': self.data
+    }
 
 def get_column_order():
   sensor_cols = ['s' + str(i) for i in range(1,22)]
