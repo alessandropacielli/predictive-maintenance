@@ -21,7 +21,7 @@ services:
     depends_on:
       - "zookeeper"
   prediction:
-    image: localhost:5000/prediction
+    build: ../prediction/
     depends_on: 
       - "kafka"
     environment:
