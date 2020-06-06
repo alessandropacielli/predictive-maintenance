@@ -13,13 +13,13 @@ producer = kafka.KafkaProducer(
   value_serializer=lambda m: json.dumps(m).encode('ascii')
 )
 
-model_path = '../estimator/training/models/regression_model_v1.h5'
+model_path = '../training/models/regression_model_v1.h5'
 model = keras.models.load_model(model_path)
 
 preprocessing_path = './resources/preprocessing/turbofan_scaler.pkl'
 preprocessing = joblib.load(preprocessing_path)
 
-test_path = '../estimator/training/data/PM_train.txt'
+test_path = '../training/data/PM_train.txt'
 columns = ['id', 'cycle', 'setting1', 'setting2', 'setting3', 's1', 's2', 's3', 
   's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11','s12', 's13', 's14', 
   's15', 's16', 's17', 's18', 's19','s20', 's21']
