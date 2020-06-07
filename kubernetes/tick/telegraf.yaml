@@ -1,0 +1,31 @@
+config:
+  agent:
+    interval: "10s"
+    round_interval: true
+    metric_buffer_limit: 10000
+    flush_buffer_when_full: true
+    collection_jitter: "0s"
+    flush_interval: "10s"
+    flush_jitter: "0s"
+    debug: false
+    quiet: false
+    hostname: ""
+  outputs:
+    - influxdb:
+        urls: ["http://influxdb:8086"] # required
+        database: "telegraf" # required
+        precision: "s"
+        timeout: "5s"
+  
+  inputs:
+    - kafka_consumer:
+        name_override: "test"
+        brokers: 
+          - "kafka:9092"
+        topics: 
+          - "test"
+        data_format: "json"
+        tag_keys: 
+            - "location"
+        consumer_group: "telegraf"
+
