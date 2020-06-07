@@ -6,7 +6,6 @@ authors = ["Alessandro Pacielli <alessandropacielli@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-jupyter = "^1.0.0"
 numpy = "^1.18.4"
 pandas = "^1.0.3"
 faust = "^1.10.4"
