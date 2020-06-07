@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prediction-deployment
+  labels:
+    app: prediction
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prediction
+  template:
+    metadata:
+      labels:
+        app: prediction
+    spec:
+      containers:
+        - name: prediction
+          image: 192.168.2.1:5000/prediction
+          ports:
+          - containerPort: 6066
+          env:
+          - name: APP_NAME
+            value: "turbofan_prediction"
+          - name: INPUT_TOPIC
+            value: "turbofan_data"
+          - name: OUTPUT_TOPIC
+            value: "turbofan_prediction"
+          - name: BROKER_LIST
+            value: "kafka:9092"
+          - name: PREPROCESSOR_PATH
+            value: "/usr/src/prediction/resources/preprocessing/turbofan_scaler.pkl"
+          - name: ESTIMATOR_PATH
+            value: "/usr/src/prediction/resources/prediction/rul_regression_v1.h5"
