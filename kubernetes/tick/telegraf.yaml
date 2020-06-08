@@ -19,13 +19,13 @@ config:
   
   inputs:
     - kafka_consumer:
-        name_override: "test"
+        name_override: "turbofan_prediction"
         brokers: 
           - "kafka:9092"
         topics: 
-          - "test"
+          - "turbofan_prediction"
         data_format: "json"
         tag_keys: 
-            - "location"
+            - "device"
         consumer_group: "telegraf"
 
