@@ -1,7 +1,9 @@
 # Prediction Agent
 This is a [Faust](https://faust.readthedocs.io/) stateful stream processing agent, collecting events from a Kafka topic and processing them using a recurrent neural network.
 
-Dependencies are managed with [Poetry] (https://python-poetry.org/).
+![Prediction stream processing agent](https://github.com/alessandropacielli/predictive-maintenance/raw/master/docs/images/prediction.png "Prediction stream processing agent")
+
+Dependencies are managed with [Poetry](https://python-poetry.org/).
 
 To run the agent make sure Kafka is running, then run the following command from this directory: 
 ```bash
