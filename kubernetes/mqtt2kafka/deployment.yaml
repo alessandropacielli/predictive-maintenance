@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt2kafka-deployment
+  labels:
+    app: mqtt2kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqtt2kafka
+  template:
+    metadata:
+      labels:
+        app: mqtt2kafka
+    spec:
+      containers:
+        - name: mqtt2kafka
+          image: arthurgrigo/simple-kafka-mqtt-connector
+          env:
+          - name: KAFKA_HOST
+            value: "kafka"
+          - name: KAFKA_PORT
+            value: "9092"
+          - name: KAFKA_CLIENT_ID
+            value: "mqtt-connector"
+          - name: MQTT_HOST
+            value: "192.168.2.2"
+          - name: MQTT_PORT
+            value: "1883"
+          - name: TOPIC_MAPPING
+            value: "turbofan_data>>>turbofan_data"
