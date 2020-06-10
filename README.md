@@ -12,7 +12,3 @@ The project is divided in the following folders:
 + [mappers](https://github.com/alessandropacielli/predictive-maintenance/tree/master/mappers): a simple python script that publishes sample data to an MQTT topic
 + [test-environment](https://github.com/alessandropacielli/predictive-maintenance/tree/master/test-environment): a docker-compose file to test the application
 + [kubernetes](https://github.com/alessandropacielli/predictive-maintenance/tree/master/kubernetes): configuration files used to deploy to kubernetes or k3s
-
-## References
-+ Predictive Maintenance using LSTM https://github.com/umbertogriffo/Predictive-Maintenance-using-LSTM
-+ Deep Learning for Predictive Maintenance https://github.com/Azure/lstms_for_predictive_maintenance/blob/master/Deep%20Learning%20Basics%20for%20Predictive%20Maintenance.ipynb
