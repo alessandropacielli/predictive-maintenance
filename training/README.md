@@ -1,5 +1,5 @@
 # Training
-The training is based on the [turbofan dataset from NASA](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/\#turbofan). A recurrent neural network is built to perform a regression task predicting the remaining useful life of turbofan devices. See the [jupyter notebook](https://github.com/alessandropacielli/predictive-maintenance/blob/master/training/Training.ipynb) for more details.
+The training is based on the [turbofan dataset from NASA](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/\#turbofan). A recurrent neural network is built to predict the remaining useful life of turbofan devices (regression). See the [jupyter notebook](https://github.com/alessandropacielli/predictive-maintenance/blob/master/training/Training.ipynb) for more details.
 
 ## References
 + Predictive Maintenance using LSTM https://github.com/umbertogriffo/Predictive-Maintenance-using-LSTM
