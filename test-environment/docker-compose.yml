@@ -6,6 +6,7 @@ services:
     ports:
       - "2181:2181"
     hostname: zookeeper
+
   kafka:
     image: wurstmeister/kafka
     command: [start-kafka.sh]
@@ -20,10 +21,30 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - "zookeeper"
+  
   prediction:
     build: ../prediction/
     depends_on: 
       - "kafka"
     environment:
       - BROKER_LIST=kafka:9092
+
+  mqtt:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  mqtt-connector:
+    image: arthurgrigo/simple-kafka-mqtt-connector
+    depends_on:
+      - mqtt
+      - kafka
+    environment:
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+      - KAFKA_CLIENT_ID=mqtt-connector
+      - MQTT_HOST=mqtt
+      - MQTT_PORT=1883
+      - TOPIC_MAPPING=turbofan_data>>>turbofan_data
 
