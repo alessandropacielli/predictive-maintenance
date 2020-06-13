@@ -1,23 +1,14 @@
 import pandas as pd
 import time
-import prediction.models.turbofan as models
 import asyncio
 import json
 import kafka
 import time
-import keras
-import joblib
 
 producer = kafka.KafkaProducer(
   bootstrap_servers=['localhost:9092'],
   value_serializer=lambda m: json.dumps(m).encode('ascii')
 )
-
-model_path = '../training/models/regression_model_v1.h5'
-model = keras.models.load_model(model_path)
-
-preprocessing_path = './resources/preprocessing/turbofan_scaler.pkl'
-preprocessing = joblib.load(preprocessing_path)
 
 test_path = '../training/data/PM_train.txt'
 columns = ['id', 'cycle', 'setting1', 'setting2', 'setting3', 's1', 's2', 's3', 
@@ -32,9 +23,6 @@ test_49 = test_df[test_df['id'] == 49]
 
 j = 0
 for k, i in test_49.iterrows(): 
-
-
-
   message = dict()
   message['device'] = '1'
   message['timestamp'] = time.time_ns()
@@ -42,5 +30,6 @@ for k, i in test_49.iterrows():
   message['data'] = data
 
   print(message)
+  time.sleep(0.1)
   
   producer.send('turbofan_data', message)
