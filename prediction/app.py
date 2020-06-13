@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import bisect
 import time
+import json
 
 config = Config()
 
@@ -17,7 +18,7 @@ app = faust.App(
   config.APP_NAME,
   broker=config.BROKER_LIST,
   stream_wait_empty=False,
-  partitions=1
+  partitions=1,
 )
 
 preprocessor = PickledPreprocessor(config.PREPROCESSOR_PATH)
@@ -30,11 +31,16 @@ state = app.Table(config.APP_NAME + '_state', default=list)
 
 circular_buffer = SortedCircularBuffer[TurbofanMeasurement](N, lambda x: x['timestamp'])
 
+app.web.blueprints.add('/stats/', 'faust.web.apps.stats:blueprint')
+
 @app.agent(input_topic)
 async def handle(stream):
     async for measurement in stream.group_by(TurbofanMeasurement.device):
       circular_buffer.set_buffer(state[measurement.device])
       circular_buffer.add(measurement.to_dict())
+
+      print(measurement)
+      print('Buffer size: ' + str(circular_buffer.get_len()) + '/' + str(N))
 
       if circular_buffer.get_len() == N:
         df = pd.DataFrame(map(lambda x: x['data'], circular_buffer.get_buffer()))
