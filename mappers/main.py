@@ -25,18 +25,13 @@ client.loop_start()
 path = config.DATASET_PATH
 device_id = config.DEVICE_ID
 
-columns = ['id', 'cycle', 'setting1', 'setting2', 'setting3', 's1', 's2', 's3', 
-  's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11','s12', 's13', 's14', 
-  's15', 's16', 's17', 's18', 's19','s20', 's21']
-
+# Data columns
 sensor_columns = ['s' + str(i) for i in range(1,22)]
 data_columns = ['setting1', 'setting2', 'setting3', 'cycle']
 data_columns.extend(sensor_columns) 
 
-test_df = pd.read_csv(path, sep=' ', header=None) 
-test_df.drop(test_df[[26, 27]], axis=1, inplace=True) 
-test_df.columns = columns 
-test_df.sort_values(['id', 'cycle'], inplace=True)
+# Read test data
+test_df = pd.read_csv(path) 
 test_df = test_df[test_df['id'] == device_id]
 
 for k, row in test_df.iterrows(): 
@@ -49,4 +44,4 @@ for k, row in test_df.iterrows():
 
   serialized_msg = json.dumps(message)
   print(serialized_msg)
-  client.publish(topic, serialized_msg)
+  # client.publish(topic, serialized_msg)
