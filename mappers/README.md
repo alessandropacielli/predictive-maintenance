@@ -1,5 +1,5 @@
 # Mapper
-Simple python script that loads a turbofan dataset and sends its measurements to an MQTT topic.
+Simple python script that loads a turbofan dataset, chooses a device at random and sends its measurements to an MQTT topic.
 
 ```
 usage: main.py [-h] [--host HOST] [--port PORT] [-t TOPIC] [-s SLEEP]
