@@ -57,3 +57,39 @@ If the virtual machine is headless (like mine) and you want to access the consol
 ssh -L 8888:localhost:8888 192.168.2.2
 ```
 Now you can navigate to http://localhost:8888 and configure Chronograf to your needs.
+
+## Prometheus + Grafana
+Follow the tutorials at:
++ https://blog.gojekengineering.com/diy-set-up-telegraf-influxdb-grafana-on-kubernetes-d55e32f8ce48
++ https://blog.gojekengineering.com/diy-how-to-set-up-prometheus-and-ingress-on-kubernetes-d395248e2ba
+
+### TL;DR
+```
+# Create namespace
+kubectl create namespace monitoring
+
+# Create Grafana user and password
+kubectl create secret generic grafana-creds \
+  --from-literal=GF_SECURITY_ADMIN_USER=<your_user> \
+  --from-literal=GF_SECURITY_ADMIN_PASSWORD=<your_password> \
+  --namespace=monitoring
+
+# Deploy Grafana
+kubectl create -f test/grafana.yaml --namespace=monitoring
+
+# Deploy Prometheus
+helm repo update
+helm install prometheus
+helm install prometheus stable/prometheus --namespace=monitoring
+```
+
+You can use the following PromQL expressions to obtain CPU and RAM usage data.
+```
+# CPU load
+sum by (pod) (rate (container_cpu_usage_seconds_total{pod=∼".+"}[5m]))
+
+# RAM load
+container_memory_working_set_bytes{pod=∼".+"}
+```
+
+
