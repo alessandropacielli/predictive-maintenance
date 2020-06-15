@@ -61,7 +61,7 @@ def run_mapper(df, device_id):
 	  time.sleep(sleep_time)
 	
 	  serialized_msg = json.dumps(message)
-	  logging.info(serialized_msg)
+          # logging.info(serialized_msg)
 	  client.publish(topic, serialized_msg)
 
 	logging.info("Device %s: stopping", device_id)
