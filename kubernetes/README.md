@@ -38,6 +38,8 @@ docker push 192.168.2.1:5000/prediction
 
 If you use a local registry, make sure to enable it in __every__ Kubernetes worker node. This is fairly easy [with k3s](https://rancher.com/docs/k3s/latest/en/installation/private-registry/).
 
+If you want to obtain access to Faust stats create a service to expose port 6066 of the prediction deployment.
+
 ## TICK stack
 The alerting and monitoring strategy is implemented with the [TICK stack](https://www.influxdata.com/blog/introduction-to-influxdatas-influxdb-and-tick-stack/). To deploy the tools on Kubernetes I used helm:
 ```bash
