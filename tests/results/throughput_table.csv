@@ -1,0 +1,4 @@
+devices,throughput_mean (events per second),throughput_max (events per second),throughput_min (events per second)
+1,2.1578947368421053,4.0,0.0
+10,19.428571428571427,40.0,2.0
+50,25.75609756097561,218.0,4.0
