@@ -29,8 +29,8 @@ config:
             - "device"
         consumer_group: "telegraf"
     - http:
-      name_override: "turbofan_prediction_stats"
-      urls: ["http://prediction-deployment:6066/stats/"]
-      data_format: "json"
-      json_query: [ "Sensor0.events_total", "Sensor0.events_active", "Sensor0.events_s", "Sensor0.events_runtime_avg"]
+        name_override: "turbofan_prediction_stats"
+        urls: ["http://prediction-deployment:6066/stats/"]
+        data_format: "json"
+        json_query: [ "Sensor0.events_total", "Sensor0.events_active", "Sensor0.events_s", "Sensor0.events_runtime_avg"]
 
