@@ -1,4 +1,0 @@
-devices,latency_mean (ms),latency_max (ms),latency_min (ms)
-1,19.513,47.664,2.768
-10,48.008,120.745,3.084
-50,56.458,115.424,0.233

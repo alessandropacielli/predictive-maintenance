@@ -1,0 +1,4 @@
+devices,latency_mean (ms),latency_max (ms),latency_min (ms),throughput_mean (events per second),throughput_max (events per second),throughput_min (events per second)
+1,19.513,47.664,2.768,2.158,4.0,0.0
+10,48.008,120.745,3.084,19.429,40.0,2.0
+50,56.458,115.424,0.233,25.756,218.0,4.0
