@@ -12,3 +12,4 @@ The project is divided in the following folders:
 + [mappers](https://github.com/alessandropacielli/predictive-maintenance/tree/master/mappers): a simple python script that publishes sample data to an MQTT topic
 + [test-environment](https://github.com/alessandropacielli/predictive-maintenance/tree/master/test-environment): a docker-compose file to test the application
 + [kubernetes](https://github.com/alessandropacielli/predictive-maintenance/tree/master/kubernetes): configuration files used to deploy to kubernetes or k3s
++ [tests](https://github.com/alessandropacielli/predictive-maintenance/tree/master/tests): performance tests
