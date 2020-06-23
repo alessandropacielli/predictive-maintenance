@@ -17,7 +17,7 @@ kubectl create -f kafka
 Wait until the deployments are ready then proceed to the next step.
 
 ## MQTT to Kafka
-To bridge MQTT and Kafka, run the (simple-kafka-mqtt-connector)[https://hub.docker.com/r/arthurgrigo/simple-kafka-mqtt-connector] with:
+To bridge MQTT and Kafka, run the [simple-kafka-mqtt-connector](https://hub.docker.com/r/arthurgrigo/simple-kafka-mqtt-connector) with:
 ```bash
 kubectl create -f mqtt2Kafka
 ```
