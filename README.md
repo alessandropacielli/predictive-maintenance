@@ -1,5 +1,5 @@
 # Distributed systems project work
-This repo contains code and configuration for my project work in Distributed Sistems during my last year of MSc in Computer Science at the University of Bologna.
+This repo contains code and configuration for my project work in Distributed Sistems developed during my last year of MSc in Computer Science at the University of Bologna.
 
 The goal is to build a stream processing application in the domain of predictive-maintenance and deploy it to k3s in an industrial edge computing scenario.
 
